@@ -19,6 +19,7 @@ services:
       - ./tmp-storage:/app/storage
       # Mount file config dùng chung từ thư mục gốc
       - ./application.yml:/app/config/application.yml:ro
+      - ./application-api.yml:/app/config/application-api.yml:ro
       - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
       - SPRING_PROFILES_ACTIVE=api
@@ -42,6 +43,7 @@ services:
       - ./tmp-storage:/app/storage
       # Mount file config dùng chung từ thư mục gốc
       - ./application.yml:/app/config/application.yml:ro
+      - ./application-worker.yml:/app/config/application-worker.yml:ro
       - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
       - SPRING_PROFILES_ACTIVE=worker
@@ -62,7 +64,7 @@ services:
     image: mongo:7.0
     container_name: kingkong-mongodb
     ports:
-      - 2717:27017
+      - 27017:27017
     volumes:
       - mongo-data:/data/db
 
