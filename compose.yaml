@@ -1,0 +1,68 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+services:
+  # Here the instructions define your application as a service called "server".
+  # This service is built from the Dockerfile in the current directory.
+  # You can add other services your application may depend on here, such as a
+  # database or a cache. For examples, see the Awesome Compose repository:
+  # https://github.com/docker/awesome-compose
+  file-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api-stage
+    ports:
+      - 8080:8080
+    volumes:
+      - ./tmp-storage:/app/storage
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/cloud_utility
+    depends_on:
+      - redis
+      - mongodb
+
+  # Here the instructions define your application as a service called "server".
+  # This service is built from the Dockerfile in the current directory.
+  # You can add other services your application may depend on here, such as a
+  # database or a cache. For examples, see the Awesome Compose repository:
+  # https://github.com/docker/awesome-compose
+  file-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: worker-stage
+    ports:
+      - 8081:8081
+    volumes:
+      - ./tmp-storage:/app/storage
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/cloud_utility
+    depends_on:
+      - redis
+      - mongodb
+
+  # Infrastructure Service: Redis for message queue and state management
+  redis:
+    image: redis:7-alpine
+    container_name: kingkong-redis
+    ports:
+      - 6379:6379
+    command: redis-server --appendonly yes
+
+  # Infrastructure Service: MongoDB for file metadata storage
+  mongodb:
+    image: mongo:7.0
+    container_name: kingkong-mongodb
+    ports:
+      - 2717:27017
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

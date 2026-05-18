@@ -1,0 +1,67 @@
+# ========================================================
+# 1. JAVA & MAVEN / GRADLE BUILD ARTIFACTS
+# ========================================================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.kotlin
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+dependency-reduced-pom.xml
+
+# ========================================================
+# 2. DỰ ÁN DOCKER & VOLUME DỮ LIỆU TẠM (CRITICAL FOR DOCKER)
+# ========================================================
+# CHẶN TUYỆT ĐỐI: Thư mục lưu file local được mount vào container API/Worker
+tmp-storage/
+
+# Chặn các file cấu hình môi trường chứa mật khẩu/token bí mật
+.env
+.env.local
+
+# ========================================================
+# 3. LOGS & TEMPORARY FILES
+# ========================================================
+*.log
+*.log.*
+sys_err_pid*
+hs_err_pid*
+replay_pid*
+
+# ========================================================
+# 4. INTELLIJ IDEA
+# ========================================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# ========================================================
+# 5. ECLIPSE
+# ========================================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# ========================================================
+# 6. NETBEANS
+# ========================================================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ========================================================
+# 7. VS CODE & OPERATING SYSTEMS
+# ========================================================
+.vscode/
+.DS_Store
+Thumbs.db
