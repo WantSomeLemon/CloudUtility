@@ -1,0 +1,8 @@
+# Worker không cần mở port web (nếu chỉ chạy ngầm)
+server:
+  port: 0
+
+app:
+  worker:
+    thread-pool-size: 4
+    retry-max-attempts: 3

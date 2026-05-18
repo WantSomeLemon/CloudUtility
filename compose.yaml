@@ -17,10 +17,11 @@ services:
       - 8080:8080
     volumes:
       - ./tmp-storage:/app/storage
+      # Mount file config dùng chung từ thư mục gốc
+      - ./application.yml:/app/config/application.yml:ro
+      - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/cloud_utility
+      - SPRING_PROFILES_ACTIVE=api
     depends_on:
       - redis
       - mongodb
@@ -39,10 +40,11 @@ services:
       - 8081:8081
     volumes:
       - ./tmp-storage:/app/storage
+      # Mount file config dùng chung từ thư mục gốc
+      - ./application.yml:/app/config/application.yml:ro
+      - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/cloud_utility
+      - SPRING_PROFILES_ACTIVE=worker
     depends_on:
       - redis
       - mongodb

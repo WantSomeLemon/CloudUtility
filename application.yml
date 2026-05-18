@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/cloud_utility
+  redis:
+    host: redis
+    port: 6379
+
+# Cấu hình đường dẫn lưu trữ dùng chung cho cả 2 container
+app:
+  storage:
+    path: /app/storage
