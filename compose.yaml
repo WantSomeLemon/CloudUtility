@@ -15,17 +15,25 @@ services:
       target: api-stage
     ports:
       - 8080:8080
+    networks:
+      app-network:
     volumes:
-      - ./tmp-storage:/app/storage
+      - ./tmp-storage:/app/storage:rw
       # Mount file config dùng chung từ thư mục gốc
       - ./application.yml:/app/config/application.yml:ro
       - ./application-api.yml:/app/config/application-api.yml:ro
       - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
       - SPRING_PROFILES_ACTIVE=api
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
     depends_on:
-      - redis
-      - mongodb
+      redis:
+        condition: service_started
+      mongodb:
+        condition: service_started
 
   # Here the instructions define your application as a service called "server".
   # This service is built from the Dockerfile in the current directory.
@@ -37,27 +45,41 @@ services:
       context: .
       dockerfile: Dockerfile
       target: worker-stage
-    ports:
-      - 8081:8081
+    restart: always
+    tty: true
+    stdin_open: true
+    networks:
+      app-network:
     volumes:
-      - ./tmp-storage:/app/storage
+      - ./tmp-storage:/app/storage:rw
       # Mount file config dùng chung từ thư mục gốc
       - ./application.yml:/app/config/application.yml:ro
       - ./application-worker.yml:/app/config/application-worker.yml:ro
       - ./logback-spring.xml:/app/config/logback-spring.xml:ro
     environment:
       - SPRING_PROFILES_ACTIVE=worker
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_CONFIG_ADDITIONAL_LOCATION=file:/app/config/application.yml,file:/app/config/application-worker.yml
     depends_on:
-      - redis
-      - mongodb
+      redis:
+        condition: service_started
+      mongodb:
+        condition: service_started
 
   # Infrastructure Service: Redis for message queue and state management
   redis:
     image: redis:7-alpine
     container_name: kingkong-redis
+    networks:
+      app-network:
+        aliases:
+          - redis
     ports:
       - 6379:6379
-    command: redis-server --appendonly yes
+    command: ["redis-server", "--bind", "0.0.0.0", "--appendonly", "yes"]
 
   # Infrastructure Service: MongoDB for file metadata storage
   mongodb:
@@ -65,8 +87,13 @@ services:
     container_name: kingkong-mongodb
     ports:
       - 27017:27017
+    networks:
+      - app-network
     volumes:
       - mongo-data:/data/db
 
+networks:
+  app-network:
+    driver: bridge
 volumes:
   mongo-data:

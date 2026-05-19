@@ -47,7 +47,9 @@ RUN adduser \
 COPY file-worker/target/file-worker-1.0-SNAPSHOT.jar app.jar
 
 # Ensure the storage directory exists for mounting volume and assign ownership to appuser.
-RUN mkdir -p /app/storage && chown -R appuser:appuser /app
+RUN mkdir -p /app/storage && \
+    chown -R appuser:appuser /app && \
+    chmod -R 777 /app/storage
 
 USER appuser
 

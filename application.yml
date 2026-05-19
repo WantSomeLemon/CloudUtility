@@ -11,4 +11,4 @@ app:
   storage:
     path: /app/storage
   queue:
-    conversion-queue: conversion:tasks
+    conversion-queue: "default-lock"

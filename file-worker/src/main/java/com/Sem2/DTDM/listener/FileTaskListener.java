@@ -1,16 +1,20 @@
 package com.Sem2.DTDM.listener;
 
 
+import com.Sem2.DTDM.common.dto.ConversionMessage;
+import com.Sem2.DTDM.service.WorkerServiceInterface;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FileTaskListener implements MessageListener {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileTaskListener.class);
+    private static final Logger log = LoggerFactory.getLogger(FileTaskListener.class);
     
     @Autowired
     private WorkerServiceInterface workerService;
@@ -21,17 +25,17 @@ public class FileTaskListener implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String payload = new String(message.getBody());
-        log.info("[Listener] Nhận message từ Redis: {}", payload);
+        log.info("[Listener] Nhận taskMessage từ Redis: {}", payload);
 
         try {
-            ConversionMessage message = objectMapper.readValue(payload, ConversionMessage.class);
+            ConversionMessage taskMessage = objectMapper.readValue(payload, ConversionMessage.class);
             log.info("[Listener] Parse thành công - taskId: {}, conversionType: {}",
-                    message.getTaskId(), message.getConversionType());
+                    taskMessage.getTaskId(), taskMessage.getConversionType());
 
-            workerService.processTask(message.getTaskId(), message.getConversionType());
+            workerService.processTask(taskMessage.getTaskId(), taskMessage.getConversionType());
 
         } catch (Exception e) {
-            log.error("[Listener] Parse message thất bại - payload: {}, lỗi: {}", payload, e.getMessage());
+            log.error("[Listener] Parse taskMessage thất bại - payload: {}, lỗi: {}", payload, e.getMessage());
         }
     }
 }
