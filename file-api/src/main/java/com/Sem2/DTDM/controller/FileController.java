@@ -1,6 +1,6 @@
 package com.Sem2.DTDM.controller;
 
-import com.Sem2.DTDM.entity.FileTask;
+import com.Sem2.DTDM.common.entity.FileTask;
 import com.Sem2.DTDM.common.dto.FileRequest;
 import com.Sem2.DTDM.service.interFace.FileTaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

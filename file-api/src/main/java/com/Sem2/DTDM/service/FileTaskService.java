@@ -1,7 +1,7 @@
 package com.Sem2.DTDM.service;
 
 import com.Sem2.DTDM.common.entity.TaskStatus;
-import com.Sem2.DTDM.entity.FileTask;
+import com.Sem2.DTDM.common.entity.FileTask;
 import com.Sem2.DTDM.repository.FileTaskRepository;
 import com.Sem2.DTDM.service.interFace.FileTaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class FileTaskService implements FileTaskServiceInterface {
     @Override
     public FileTask createTask(String fileName) {
         FileTask task = new FileTask();
-        task.setFileName(fileName);
+        task.setFileNameOriginal(fileName);
         task.setStatus(TaskStatus.PENDING);
         return repository.save(task);
     }
