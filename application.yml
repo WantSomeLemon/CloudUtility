@@ -10,3 +10,5 @@ spring:
 app:
   storage:
     path: /app/storage
+  queue:
+    conversion-queue: conversion:tasks

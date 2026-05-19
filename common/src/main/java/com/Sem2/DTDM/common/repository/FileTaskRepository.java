@@ -1,4 +1,4 @@
-package com.Sem2.DTDM.repository;
+package com.Sem2.DTDM.common.repository;
 
 import com.Sem2.DTDM.common.entity.FileTask;
 import org.springframework.data.mongodb.repository.MongoRepository;

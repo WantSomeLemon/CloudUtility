@@ -2,7 +2,7 @@ package com.Sem2.DTDM.service;
 
 import com.Sem2.DTDM.common.entity.TaskStatus;
 import com.Sem2.DTDM.common.entity.FileTask;
-import com.Sem2.DTDM.repository.FileTaskRepository;
+import com.Sem2.DTDM.common.repository.FileTaskRepository;
 import com.Sem2.DTDM.service.interFace.FileTaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
