@@ -1,0 +1,89 @@
+{
+  "info": {
+    "_postman_id": "f31610db-b2dc-44a9-9bca-e7d78f014d0a",
+    "name": "Cloud Utility",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55535983",
+    "_collection_link": "https://go.postman.co/collection/55535983-f31610db-b2dc-44a9-9bca-e7d78f014d0a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "word to pdf",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "description": "cho file word ở đấy",
+              "type": "file",
+              "uuid": "040c2c6b-8861-4cd0-b412-da1d01443fc8",
+              "value": null
+            },
+            {
+              "key": "type",
+              "value": "WORD_TO_PDF",
+              "type": "text",
+              "uuid": "7678364a-73f1-4b33-878e-8b6cc157ad6b"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/files/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "files",
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "pdf to word",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "uuid": "040c2c6b-8861-4cd0-b412-da1d01443fc8",
+              "description": "cho file pdf ở đấy",
+              "value": null
+            },
+            {
+              "key": "type",
+              "value": "PDF_TO_WORD",
+              "type": "text",
+              "uuid": "7678364a-73f1-4b33-878e-8b6cc157ad6b"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/files/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "files",
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
